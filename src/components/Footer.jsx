@@ -21,7 +21,7 @@ const Footer = () => {
     "w-10 h-10 flex items-center justify-center rounded-lg bg-gray-800 hover:bg-emerald-500 hover:scale-110 transition-all duration-300";
 
   return (
-    <footer className="bg-gray-950 text-gray-400">
+    <footer className="bg-gray-950 mt-20 text-gray-400">
 
       <div className="max-w-6xl mx-auto px-6 py-16">
 
