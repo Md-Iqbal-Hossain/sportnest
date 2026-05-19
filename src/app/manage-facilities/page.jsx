@@ -21,7 +21,7 @@
 //                         Edit or remove your listed venues
 //                     </p>
 //                 </div>
-                
+
 //                 {/* Secondary upper absolute fallback call-to-action control element */}
 //                 <Link href="/add-facility">
 //                     <Button 
@@ -36,7 +36,7 @@
 //             {/* CONDITIONAL RENDER INTERACTION DESK */}
 //             {facilities.length === 0 ? (
 //                 <div className="w-full rounded-2xl border border-slate-200/60 bg-white p-12 md:p-20 shadow-sm flex flex-col items-center justify-center text-center">
-                    
+
 //                     {/* SVG/Asset container matching the layout structure of your system graphics image */}
 //                     <div className="relative mb-6 p-4 rounded-2xl bg-slate-50 border border-slate-100 transition-transform duration-300 hover:scale-105">
 //                         <svg 
@@ -61,7 +61,7 @@
 //                     <h3 className="text-xl font-bold text-slate-800 tracking-tight">
 //                         No facilities listed yet
 //                     </h3>
-                    
+
 //                     <p className="text-sm text-slate-400 mt-2 max-w-sm font-medium leading-relaxed">
 //                         Add your first facility to start receiving bookings and managing court reservation timelines.
 //                     </p>
@@ -103,6 +103,7 @@ import { FiEdit3, FiTrash2 } from 'react-icons/fi';
 import { LuMapPin } from 'react-icons/lu';
 import { FaTags } from 'react-icons/fa6';
 import { RxPeople } from 'react-icons/rx';
+import { BsFillTrash2Fill } from 'react-icons/bs';
 
 const ManageFacilitiesPage = () => {
     const [facilities, setFacilities] = useState([]);
@@ -164,7 +165,7 @@ const ManageFacilitiesPage = () => {
                     <p className="text-sm text-slate-400 mt-1 font-medium">Edit or remove your listed venues</p>
                 </div>
                 <Link href="/add-facility">
-                    <Button 
+                    <Button
                         className="rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm px-5 h-11 transition-all"
                         startContent={<IoAddCircleOutline className="text-lg" />}
                     >
@@ -193,9 +194,9 @@ const ManageFacilitiesPage = () => {
                 <div className="space-y-4">
                     {/* PLUG IN MATRIX DISPLAY MAPPING MATCHING SCREENSHOT CONFIGURATIONS */}
                     {facilities.map((facility) => (
-                        <Card 
-                            key={facility._id} 
-                            className="p-4 rounded-2xl border border-slate-200/60 bg-white shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-all hover:shadow-md"
+                        <Card
+                            key={facility._id}
+                            className="p-4 rounded-2xl border border-slate-200/60 bg-gray-50 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-all hover:shadow-md"
                         >
                             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full">
                                 {/* ASSET IMAGING BOX */}
@@ -213,7 +214,7 @@ const ManageFacilitiesPage = () => {
                                 <div className="space-y-1.5">
                                     <div className="flex flex-wrap items-center gap-2">
                                         <h3 className="text-lg font-bold text-slate-800 tracking-tight">{facility.name}</h3>
-                                        <span className="rounded bg-emerald-50 text-[10px] font-bold uppercase tracking-wider text-emerald-600 px-2 py-0.5">
+                                        <span className="rounded-full bg-lime-400 text-[10px] font-bold uppercase tracking-wider text-emerald-600 px-2 py-0.5">
                                             {facility.facility_type}
                                         </span>
                                     </div>
@@ -227,9 +228,9 @@ const ManageFacilitiesPage = () => {
                                             <FaTags className="text-slate-400" /> ৳ {facility.price_per_hour}/hr
                                         </span>
                                         <span className="flex items-center gap-1">
-                                            <RxPeople className="text-slate-400" /> {facility.capacity} players
+                                            <RxPeople className="text-slate-400" /> Up to {facility.capacity} players
                                         </span>
-                                        <span className="rounded-full bg-emerald-100/60 text-[10px] font-bold text-emerald-700 px-2 py-0.5 mt-0.5 sm:mt-0">
+                                        <span className="rounded-full bg-blue-500/60 text-[10px] font-bold text-white px-2 py-0.5 mt-0.5 sm:mt-0">
                                             {facility.booking_count || 0} Bookings
                                         </span>
                                     </div>
@@ -239,19 +240,19 @@ const ManageFacilitiesPage = () => {
                             {/* USER CONTROL ROW ACTIONS (EDIT & DELETE TARGET MODAL RIGGING) */}
                             <div className="flex sm:flex-col items-center justify-end gap-2 w-full sm:w-auto pt-3 sm:pt-0 border-t sm:border-none border-slate-100">
                                 <Link href={`/manage-facilities/edit/${facility._id}`} className="w-full sm:w-auto">
-                                    <Button 
-                                        variant="light" 
-                                        className="w-full sm:w-24 h-9 rounded-lg text-slate-600 hover:text-blue-600 font-bold text-xs gap-1.5 hover:bg-blue-50/50"
-                                        startContent={<FiEdit3 className="text-sm" />}
+                                    <Button
+                                        variant="solid"
+                                        className="w-full sm:w-20 h-8 rounded-xl bg-stone-200 text-green-800 border border-emerald-600 font-semibold text-[11px] gap-1 hover:bg-green-100 hover:border-emerald-700 transition-all duration-300 shadow-sm hover:shadow-md"
+                                        startContent={<FiEdit3 size={13} />}
                                     >
                                         Edit
                                     </Button>
                                 </Link>
-                                <Button 
-                                    variant="light" 
+                                <Button
+                                    variant="solid"
                                     onClick={() => handleDelete(facility._id)}
-                                    className="w-full sm:w-24 h-9 rounded-lg text-slate-400 hover:text-rose-600 font-bold text-xs gap-1.5 hover:bg-rose-50/50"
-                                    startContent={<FiTrash2 className="text-sm" />}
+                                    className="w-full sm:w-20 h-8 rounded-xl bg-red-50 text-red-600 border border-red-200 font-semibold text-[11px] gap-1 hover:bg-red-100 transition-all duration-300"
+                                    startContent={<BsFillTrash2Fill size={12} />}
                                 >
                                     Delete
                                 </Button>
