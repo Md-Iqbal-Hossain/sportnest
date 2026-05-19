@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Card } from '@heroui/react';
+import { Card, Separator } from '@heroui/react';
 import {
     Button,
     Description,
@@ -19,6 +19,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { GiShuttlecock } from 'react-icons/gi';
 import { authClient } from '@/lib/auth-client';
 import toast from 'react-hot-toast';
+import { FcGoogle } from 'react-icons/fc';
 
 const RegisterPage = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -60,66 +61,73 @@ const RegisterPage = () => {
     // };
 
     const onSubmit = async (e) => {
-    e.preventDefault();
+        e.preventDefault();
 
-    const formData = new FormData(e.currentTarget);
-    const user = Object.fromEntries(formData.entries());
+        const formData = new FormData(e.currentTarget);
+        const user = Object.fromEntries(formData.entries());
 
-    // Frontend validation
-    if (user.password.length < 6) {
-        toast.error("Password must be at least 6 characters");
-        return;
-    }
-
-    if (!/[A-Z]/.test(user.password)) {
-        toast.error("Password must contain uppercase letter");
-        return;
-    }
-
-    if (!/[a-z]/.test(user.password)) {
-        toast.error("Password must contain lowercase letter");
-        return;
-    }
-
-    try {
-        const { data, error } = await authClient.signUp.email({
-            email: user.email,
-            password: user.password,
-            name: user.name,
-            image: user.image || undefined
-        });
-
-        if (error) {
-            toast.error(error.message || "Registration failed");
+        // Frontend validation
+        if (user.password.length < 6) {
+            toast.error("Password must be at least 6 characters");
             return;
         }
 
-        // if (data) {
-        //     toast.success("Account created successfully!");
+        if (!/[A-Z]/.test(user.password)) {
+            toast.error("Password must contain uppercase letter");
+            return;
+        }
 
-        //     setTimeout(() => {
-        //         router.push('/login');
-        //     }, 1000);
-        // }
+        if (!/[a-z]/.test(user.password)) {
+            toast.error("Password must contain lowercase letter");
+            return;
+        }
 
-        if (data) {
-    // 1. Immediately kill the auto-logged-in session
-    await authClient.signOut(); 
-    
-    toast.success("Account created successfully! Please log in.");
-    
-    setTimeout(() => {
-        // 2. Now send them to login safely with no hidden states leaked
-        router.push('/login');
-        router.refresh();
-    }, 1000);
-}
+        try {
+            const { data, error } = await authClient.signUp.email({
+                email: user.email,
+                password: user.password,
+                name: user.name,
+                image: user.image || undefined
+            });
 
-    } catch (err) {
-        toast.error("Something went wrong");
-        console.log(err);
+            if (error) {
+                toast.error(error.message || "Registration failed");
+                return;
+            }
+
+            // if (data) {
+            //     toast.success("Account created successfully!");
+
+            //     setTimeout(() => {
+            //         router.push('/login');
+            //     }, 1000);
+            // }
+
+            if (data) {
+                // 1. Immediately kill the auto-logged-in session
+                await authClient.signOut();
+
+                toast.success("Account created successfully! Please log in.");
+
+                setTimeout(() => {
+                    // 2. Now send them to login safely with no hidden states leaked
+                    router.push('/login');
+                    router.refresh();
+                }, 1000);
+            }
+
+        } catch (err) {
+            toast.error("Something went wrong");
+            console.log(err);
+        }
+    };
+
+    const handleGoogleSignin = async () => {
+        await authClient.signIn.social({
+            provider: "google",
+        });
     }
-};
+
     return (
         <div className='max-w-7xl mx-auto pt-10 px-4'>
 
@@ -246,6 +254,14 @@ const RegisterPage = () => {
                     </Button>
 
                 </Form>
+                <div className='flex justify-center items-center gap-3'>
+                    <Separator />
+                    <div className='whitespace-nowrap text-gray-400 text-sm'>or continue with</div>
+                    <Separator />
+                </div>
+                <div>
+                    <Button onClick={handleGoogleSignin} variant='outline' className={'w-full rounded-none'}><FcGoogle /> Continue with Google</Button>
+                </div>
 
             </Card>
         </div>

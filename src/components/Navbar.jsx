@@ -379,7 +379,7 @@
 //                 ) : (
 //                     /* Added 'py-2' padding container here so the hover zone bridges the gap */
 //                     <div className="relative group py-2">
-                        
+
 //                         {/* User avatar optimized with Next Image */}
 //                         <Image
 //                             src={session?.user?.image || "/default-avatar.png"}
@@ -526,7 +526,7 @@
 //                     </Link>
 //                 ) : (
 //                     <div className="relative group py-2">
-                        
+
 //                         {/* AVATAR WRAPPER */}
 //                         <div className="cursor-pointer">
 //                             {session?.user?.image ? (
@@ -591,13 +591,14 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { GiShuttlecock } from "react-icons/gi";
 import { authClient } from '@/lib/auth-client';
+import { toast } from 'react-hot-toast';
 
 const Navbar = () => {
     const pathname = usePathname();
 
     // Get logged in user session
     const { data: session, isPending } = authClient.useSession();
-    
+
     // Explicitly guarantee user context is loaded and valid
     const isLoggedIn = !isPending && !!session?.user;
 
@@ -687,7 +688,7 @@ const Navbar = () => {
                     </Link>
                 ) : (
                     <div className="relative group py-2">
-                        
+
                         {/* AVATAR WRAPPER */}
                         <div className="cursor-pointer">
                             {session?.user?.image ? (
@@ -708,7 +709,7 @@ const Navbar = () => {
                         {/* Dropdown Menu */}
                         <div className="absolute right-0 top-full hidden group-hover:block bg-white shadow-xl rounded-xl p-3 w-48 border border-gray-100 z-50">
                             <p className="px-3 py-2 text-xs text-gray-400 font-medium border-b border-gray-100 mb-1 truncate">
-                                Signed in as <br/>
+                                Signed in as <br />
                                 <span className="text-sm font-semibold text-gray-800">{session?.user?.name}</span>
                             </p>
 
@@ -724,10 +725,35 @@ const Navbar = () => {
                                 Manage Facilities
                             </Link>
 
-                            <button
+                            {/* <button
                                 onClick={async () => {
                                     await authClient.signOut();
                                     window.location.reload(); // Hard clear auth client cache states
+                                }}
+                                className="w-full text-left mt-2 px-3 py-2 text-sm font-medium hover:bg-red-50 text-red-500 rounded-lg transition border-t border-gray-50 pt-2"
+                            >
+                                Logout
+                            </button> */}
+
+                            <button
+                                onClick={async () => {
+                                    try {
+                                        // 1. Trigger the auth sign out
+                                        await authClient.signOut();
+
+                                        // 2. Show the success toast immediately
+                                        toast.success("Logged out successfully! See you soon.");
+
+                                        // 3. Wait 1 second so they can see the animation, then redirect or refresh
+                                        setTimeout(() => {
+                                            // Sending them to home page and forcing a clean state reload
+                                            window.location.href = "/";
+                                        }, 1000);
+
+                                    } catch (error) {
+                                        toast.error("Something went wrong during logout.");
+                                        console.error(error);
+                                    }
                                 }}
                                 className="w-full text-left mt-2 px-3 py-2 text-sm font-medium hover:bg-red-50 text-red-500 rounded-lg transition border-t border-gray-50 pt-2"
                             >
