@@ -263,6 +263,16 @@ const RegisterPage = () => {
                     <Button onClick={handleGoogleSignin} variant='outline' className={'w-full rounded-none'}><FcGoogle /> Continue with Google</Button>
                 </div>
 
+                <div className="text-center mt-6 text-sm text-gray-400">
+                    Already have an account?{' '}
+                    <Link
+                        href="/login"
+                        className="font-medium text-emerald-400 hover:text-emerald-300 transition-colors duration-200 underline underline-offset-4"
+                    >
+                        Login
+                    </Link>
+                </div>
+
             </Card>
         </div>
     );

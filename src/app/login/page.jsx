@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Card } from '@heroui/react';
+import { Card, Separator } from '@heroui/react';
 import {
     Button,
     Description,
@@ -19,6 +19,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { GiShuttlecock } from 'react-icons/gi';
 import { authClient } from '@/lib/auth-client';
 import toast from 'react-hot-toast';
+import { FcGoogle } from 'react-icons/fc';
 
 const LoginPage = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -68,6 +69,12 @@ const LoginPage = () => {
             console.log(err);
         }
     };
+
+    const handleGoogleSignin = async () => {
+        await authClient.signIn.social({
+            provider: "google",
+        });
+    }
 
     return (
         <div className='max-w-7xl mx-auto pt-10 px-4'>
@@ -195,6 +202,25 @@ const LoginPage = () => {
                     </Button>
 
                 </Form>
+
+                <div className='flex justify-center items-center gap-3'>
+                    <Separator />
+                    <div className='whitespace-nowrap text-gray-400 text-sm'>or continue with</div>
+                    <Separator />
+                </div>
+                <div>
+                    <Button onClick={handleGoogleSignin} variant='outline' className={'w-full rounded-none'}><FcGoogle /> Continue with Google</Button>
+                </div>
+
+                <div className="text-center mt-6 text-sm text-gray-400">
+                    Don&apos;t have an account?{' '}
+                    <Link
+                        href="/register"
+                        className="font-medium text-emerald-400 hover:text-emerald-300 transition-colors duration-200 underline underline-offset-4"
+                    >
+                        Register free
+                    </Link>
+                </div>
 
             </Card>
         </div>
