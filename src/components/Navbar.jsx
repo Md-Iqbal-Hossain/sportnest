@@ -55,7 +55,7 @@ const Navbar = () => {
                 </li>
 
                 {/* PRIVATE LINKS */}
-                {isLoggedIn && (
+                {/* {isLoggedIn && ( */}
                     <>
                         <li>
                             <Link href="/my-bookings" className={linkClass("/my-bookings")}>
@@ -71,11 +71,11 @@ const Navbar = () => {
 
                         <li>
                             <Link href="/manage-facilities" className={linkClass("/manage-facilities")}>
-                                Manage Facilities
+                                Manage My Facilities
                             </Link>
                         </li>
                     </>
-                )}
+                {/* )} */}
 
             </ul>
 
