@@ -20,106 +20,55 @@ import { GiShuttlecock } from 'react-icons/gi';
 import { authClient } from '@/lib/auth-client';
 import toast from 'react-hot-toast';
 
-const RegisterPage = () => {
+const LoginPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const router = useRouter();
 
-    // const onSubmit = async (e) => {
-    //     e.preventDefault();
-
-    //     const formData = new FormData(e.currentTarget);
-    //     const user = Object.fromEntries(formData.entries());
-
-    //     try {
-    //         const { data, error } = await authClient.signUp.email({
-    //             email: user.email,
-    //             password: user.password,
-    //             name: user.name,
-    //             image: user.image || undefined
-    //         });
-
-    //         if (error) {
-    //             toast.error(
-    //                 error.message || "Registration failed"
-    //             );
-    //             return;
-    //         }
-
-    //         if (data) {
-    //             toast.success("Account created successfully!");
-
-    //             setTimeout(() => {
-    //                 router.push('/login');
-    //             }, 1000);
-    //         }
-
-    //     } catch (err) {
-    //         toast.error("Something went wrong");
-    //         console.log(err);
-    //     }
-    // };
-
     const onSubmit = async (e) => {
-    e.preventDefault();
+        e.preventDefault();
 
-    const formData = new FormData(e.currentTarget);
-    const user = Object.fromEntries(formData.entries());
+        const formData = new FormData(e.currentTarget);
+        const user = Object.fromEntries(formData.entries());
 
-    // Frontend validation
-    if (user.password.length < 6) {
-        toast.error("Password must be at least 6 characters");
-        return;
-    }
+        try {
+            const { data, error } = await authClient.signIn.email({
+                email: user.email,
+                password: user.password,
+            });
 
-    if (!/[A-Z]/.test(user.password)) {
-        toast.error("Password must contain uppercase letter");
-        return;
-    }
+            console.log({ data, error });
 
-    if (!/[a-z]/.test(user.password)) {
-        toast.error("Password must contain lowercase letter");
-        return;
-    }
 
-    try {
-        const { data, error } = await authClient.signUp.email({
-            email: user.email,
-            password: user.password,
-            name: user.name,
-            image: user.image || undefined
-        });
+            if (error) {
+                toast.error(
+                    error.message || "Registration failed"
+                );
+                return;
+            }
 
-        if (error) {
-            toast.error(error.message || "Registration failed");
-            return;
+            // if (data) {
+            //     toast.success("Account created successfully!");
+
+            //     setTimeout(() => {
+            //         router.push('/');
+            //     }, 1000);
+            // }
+
+            if (data) {
+                toast.success("Welcome back! Logged in successfully.");
+
+                setTimeout(() => {
+                    router.push('/');
+                    router.refresh(); // Forces Next.js to pull fresh route layouts
+                }, 1000);
+            }
+
+        } catch (err) {
+            toast.error("Something went wrong");
+            console.log(err);
         }
+    };
 
-        // if (data) {
-        //     toast.success("Account created successfully!");
-
-        //     setTimeout(() => {
-        //         router.push('/login');
-        //     }, 1000);
-        // }
-
-        if (data) {
-    // 1. Immediately kill the auto-logged-in session
-    await authClient.signOut(); 
-    
-    toast.success("Account created successfully! Please log in.");
-    
-    setTimeout(() => {
-        // 2. Now send them to login safely with no hidden states leaked
-        router.push('/login');
-        router.refresh();
-    }, 1000);
-}
-
-    } catch (err) {
-        toast.error("Something went wrong");
-        console.log(err);
-    }
-};
     return (
         <div className='max-w-7xl mx-auto pt-10 px-4'>
 
@@ -151,7 +100,7 @@ const RegisterPage = () => {
 
                 <div className='text-center mb-6'>
                     <h1 className='text-3xl font-bold'>
-                        Create Account
+                        Login
                     </h1>
 
                     <p className='text-gray-400 text-sm mt-2'>
@@ -164,11 +113,11 @@ const RegisterPage = () => {
                     className="flex w-full flex-col gap-4"
                 >
 
-                    <TextField isRequired name="name">
+                    {/* <TextField isRequired name="name">
                         <Label>Name</Label>
                         <Input placeholder="Enter your name" />
                         <FieldError />
-                    </TextField>
+                    </TextField> */}
 
                     <TextField
                         isRequired
@@ -180,14 +129,14 @@ const RegisterPage = () => {
                         <FieldError />
                     </TextField>
 
-                    <TextField
+                    {/* <TextField
                         name="image"
                         type="url"
                     >
                         <Label>Photo URL</Label>
                         <Input placeholder="Enter photo URL" />
                         <FieldError />
-                    </TextField>
+                    </TextField> */}
 
                     <TextField
                         isRequired
@@ -239,10 +188,10 @@ const RegisterPage = () => {
                     </TextField>
 
                     <Button
-                        className='rounded-none w-full bg-gradient-to-br from-lime-500 via-green-400 to-teal-800 p-3 mt-2'
+                        className='rounded-none w-full bg-gradient-to-br from-teal-600 via-green-400 to-lime-400 mt-2'
                         type="submit"
                     >
-                        Create Account
+                        Login
                     </Button>
 
                 </Form>
@@ -252,4 +201,4 @@ const RegisterPage = () => {
     );
 };
 
-export default RegisterPage;
+export default LoginPage;

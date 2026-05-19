@@ -166,7 +166,7 @@ const ManageFacilitiesPage = () => {
                 </div>
                 <Link href="/add-facility">
                     <Button
-                        className="rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm px-5 h-11 transition-all"
+                        className="rounded-xl bg-gradient-to-br from-teal-600 via-green-400 to-lime-400 hover:bg-emerald-700 text-white font-semibold text-sm px-5 h-11 transition-all"
                         startContent={<IoAddCircleOutline className="text-lg" />}
                     >
                         Add New

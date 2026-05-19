@@ -563,7 +563,7 @@ const AddFacilityPage = () => {
                     {/* CONFIRMATION SUBMISSION BUTTON ARMED WITH SOLID PALETTE EMERALD COLOR ACTIONS */}
                     <Button
                         type="submit"
-                        className="w-full h-12 rounded-xl bg-emerald-600 text-sm font-bold text-white shadow-sm shadow-emerald-600/10 transition-all duration-200 hover:bg-emerald-700 active:scale-[0.99] mt-4"
+                        className="w-full h-12 rounded-xl bg-gradient-to-br from-teal-600 via-green-400 to-lime-400 text-sm font-bold text-white shadow-sm shadow-emerald-600/10 transition-all duration-200 hover:bg-emerald-700 active:scale-[0.99] mt-4"
                     >
                         Add Facility
                     </Button>
