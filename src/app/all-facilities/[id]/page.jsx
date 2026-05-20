@@ -365,7 +365,8 @@ const AllFacilitiesDetailsPage = async ({ params }) => {
                     <BookingForm 
                         facilityName={name} 
                         pricePerHour={price_per_hour} 
-                        availableSlots={available_slots} 
+                        availableSlots={available_slots}
+                        facilityImage={facility.image}
                     />
                 </div>
 
