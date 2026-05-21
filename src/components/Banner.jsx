@@ -48,7 +48,7 @@ import Link from "next/link";
 
 const Banner = () => {
   return (
-    <section className="relative h-[80vh] flex items-center justify-center bg-[url('/assets/banner.jpg')] bg-cover bg-center">
+    <section className="relative h-[80vh] flex items-center justify-center bg-[url('/assets/Banner.jpg')] bg-cover bg-center">
 
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-black/60"></div>

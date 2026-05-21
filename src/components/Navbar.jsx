@@ -624,7 +624,8 @@ const Navbar = () => {
     }
 
     return (
-        <nav className="flex justify-around items-center bg-white px-4 py-2 shadow-md">
+        <div className='bg-white'>
+            <nav className="flex justify-around items-center  px-4 py-2 shadow-md">
 
             {/* LOGO */}
             <Link href="/" className="flex items-center gap-3 cursor-pointer group">
@@ -765,6 +766,7 @@ const Navbar = () => {
             </div>
 
         </nav>
+        </div>
     );
 };
 
