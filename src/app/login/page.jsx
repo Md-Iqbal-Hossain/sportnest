@@ -47,20 +47,12 @@ const LoginPage = () => {
                 return;
             }
 
-            // if (data) {
-            //     toast.success("Account created successfully!");
-
-            //     setTimeout(() => {
-            //         router.push('/');
-            //     }, 1000);
-            // }
-
             if (data) {
                 toast.success("Welcome back! Logged in successfully.");
 
                 setTimeout(() => {
                     router.push('/');
-                    router.refresh(); // Forces Next.js to pull fresh route layouts
+                    router.refresh(); 
                 }, 1000);
             }
 
@@ -120,12 +112,6 @@ const LoginPage = () => {
                     className="flex w-full flex-col gap-4"
                 >
 
-                    {/* <TextField isRequired name="name">
-                        <Label>Name</Label>
-                        <Input placeholder="Enter your name" />
-                        <FieldError />
-                    </TextField> */}
-
                     <TextField
                         isRequired
                         name="email"
@@ -135,15 +121,6 @@ const LoginPage = () => {
                         <Input placeholder="john@example.com" />
                         <FieldError />
                     </TextField>
-
-                    {/* <TextField
-                        name="image"
-                        type="url"
-                    >
-                        <Label>Photo URL</Label>
-                        <Input placeholder="Enter photo URL" />
-                        <FieldError />
-                    </TextField> */}
 
                     <TextField
                         isRequired

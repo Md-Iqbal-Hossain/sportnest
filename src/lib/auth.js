@@ -71,7 +71,7 @@ session: {
   cookieCache: {
     enabled: true,
     strategy: 'jwt',
-    //max 7 days
+    //max 365 days
     maxAge: 365 * 24 * 60 * 60
   }
 },

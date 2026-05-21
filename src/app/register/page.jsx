@@ -66,7 +66,6 @@ const RegisterPage = () => {
         const formData = new FormData(e.currentTarget);
         const user = Object.fromEntries(formData.entries());
 
-        // Frontend validation
         if (user.password.length < 6) {
             toast.error("Password must be at least 6 characters");
             return;
@@ -95,22 +94,12 @@ const RegisterPage = () => {
                 return;
             }
 
-            // if (data) {
-            //     toast.success("Account created successfully!");
-
-            //     setTimeout(() => {
-            //         router.push('/login');
-            //     }, 1000);
-            // }
-
             if (data) {
-                // 1. Immediately kill the auto-logged-in session
                 await authClient.signOut();
 
                 toast.success("Account created successfully! Please log in.");
 
                 setTimeout(() => {
-                    // 2. Now send them to login safely with no hidden states leaked
                     router.push('/login');
                     router.refresh();
                 }, 1000);

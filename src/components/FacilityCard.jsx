@@ -1,39 +1,3 @@
-// import Image from 'next/image';
-// import React from 'react';
-// import { LuMapPin } from 'react-icons/lu';
-// import { RxPeople } from 'react-icons/rx';
-
-// const FacilityCard = ({facility}) => {
-//     const {image, name, location, available_slots, capacity, 
-// price_per_hour, 
-// facility_type} = facility;
-//     return (
-//         <div className='border'>
-//             <Image className='' alt={name}
-//             src={image}
-//             height={400}
-//             width={400} />
-
-//             <div className='grid grid-cols-3 gap-5'>
-//                 <div>
-//                     <h2 className='text-xl font-bold'>{name}</h2>
-//                 </div>
-//                 <div className='flex items-center gap-1'>
-//                     {' '}
-//                     <LuMapPin /> <span>{location}</span>
-//                 </div>
-//                 <div className='flex gap-1 items-center'>
-//                     <RxPeople /> {capacity}
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default FacilityCard;
-
-
-// ***********************************************************************
 
 import Image from "next/image";
 import React from "react";
@@ -43,7 +7,7 @@ import { FaClock } from "react-icons/fa";
 import { Button } from "@heroui/react";
 import Link from "next/link";
 
-// 🎨 Badge color logic
+//  Badge color logic
 const getBadgeColor = (type) => {
     switch (type?.toLowerCase()) {
         case "football":

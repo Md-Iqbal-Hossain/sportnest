@@ -1,17 +1,4 @@
-// import React from 'react';
 
-// const NotFoundPage = () => {
-//     return (
-//         <div>
-//             404 not found
-//         </div>
-//     );
-// };
-
-// export default NotFoundPage;
-
-
-// ****************************
 'use client';
 
 import Link from 'next/link';
@@ -24,12 +11,10 @@ const NotFoundPage = () => {
 
             <div className="text-center max-w-md">
 
-                {/* 404 */}
                 <h1 className="text-8xl font-extrabold text-green-500">
                     404
                 </h1>
 
-                {/* Friendly message */}
                 <h2 className="mt-4 text-3xl font-bold text-gray-800">
                     Oops! Page not found
                 </h2>
@@ -38,7 +23,6 @@ const NotFoundPage = () => {
                     The page you are looking for doesn’t exist or may have been moved.
                 </p>
 
-                {/* Back Home Button */}
                 <Link href="/" className="inline-block mt-8">
                     <button className="flex items-center gap-2 px-6 py-3 rounded-xl bg-green-600 text-white font-medium hover:bg-green-700 hover:scale-105 transition duration-300 shadow-lg">
                         <IoHomeSharp />

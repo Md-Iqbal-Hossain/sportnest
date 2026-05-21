@@ -9,7 +9,6 @@ export default function Home() {
     <div >
       <Banner />
 
-      {/* <Featured /> */}
       <Suspense fallback={<FeaturedLoading />}>
                 <Featured />
             </Suspense>
