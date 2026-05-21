@@ -385,6 +385,205 @@
 
 // *****************************************************
 
+// 'use client';
+
+// import React from 'react';
+// import {
+//     FieldError,
+//     Input,
+//     Label,
+//     TextArea,
+//     TextField,
+//     Button,
+//     Card
+// } from '@heroui/react';
+// import { authClient } from '@/lib/auth-client';
+
+// const AddFacilityPage = () => {
+
+//     // Dummy user fallback state compilation block
+//     const user = {
+//         email: 'user@gmail.com'
+//     };
+
+//     const onSubmit = async (e) => {
+//         e.preventDefault();
+//         const formData = new FormData(e.currentTarget);
+//         const facility = Object.fromEntries(formData.entries());
+
+//         // Standard numeric mutation configurations
+//         facility.price_per_hour = Number(facility.price_per_hour);
+//         facility.capacity = Number(facility.capacity);
+
+//         facility.available_slots = facility.available_slots
+//             .split(',')
+//             .map(slot => slot.trim());
+
+//         facility.owner_email = user.email;
+//         facility.booking_count = 0;
+
+//         console.log("Compiling Payload Matrix Data: ", facility);
+
+//         const { data: tokenData } = await authClient.token()
+//                     console.log(tokenData);
+
+//         try {
+//             const res = await fetch('http://localhost:5000/facility', {
+//                 method: 'POST',
+//                 headers: {
+//                     'content-type': 'application/json',
+//                     authorization: `Bearer ${tokenData?.token}`
+//                 },
+//                 body: JSON.stringify(facility)
+//             });
+
+//             const data = await res.json();
+//             console.log("Server response confirmation block: ", data);
+
+//             if (data.insertedId) {
+//                 alert('Facility Added Successfully!');
+//                 e.target.reset();
+//             }
+
+//         } catch (error) {
+//             console.error("Critical operational pipeline layout fault: ", error);
+//         }
+//     };
+
+//     return (
+//         <div className="mx-auto max-w-4xl px-4 py-12 md:px-6 bg-slate-50/10 min-h-screen">
+//             <h1 className="text-3xl font-bold tracking-tight text-slate-900 mb-8">
+//                 Add Facility
+//             </h1>
+
+//             <Card className="p-6 md:p-10 rounded-2xl border border-slate-200/60 bg-white shadow-xl shadow-slate-100/40">
+//                 <form onSubmit={onSubmit} className="space-y-6">
+//                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+//                         {/* Facility Name */}
+//                         <TextField name="name" isRequired className="w-full">
+//                             <Label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">
+//                                 Facility Name
+//                             </Label>
+//                             <Input
+//                                 placeholder="Elite Football Turf"
+//                                 className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition-all duration-300 hover:border-emerald-400/60 hover:bg-slate-50/50 focus:border-emerald-600 focus:bg-white focus:ring-1 focus:ring-emerald-600"
+//                             />
+//                             <FieldError className="text-xs text-rose-500 mt-1 font-medium" />
+//                         </TextField>
+
+//                         {/* Facility Type */}
+//                         <TextField name="facility_type" isRequired className="w-full">
+//                             <Label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">
+//                                 Facility Type
+//                             </Label>
+//                             <Input
+//                                 placeholder="Football / Badminton / Cricket"
+//                                 className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition-all duration-300 hover:border-emerald-400/60 hover:bg-slate-50/50 focus:border-emerald-600 focus:bg-white focus:ring-1 focus:ring-emerald-600"
+//                             />
+//                             <FieldError className="text-xs text-rose-500 mt-1 font-medium" />
+//                         </TextField>
+
+//                         {/* Location */}
+//                         <TextField name="location" isRequired className="w-full">
+//                             <Label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">
+//                                 Location
+//                             </Label>
+//                             <Input
+//                                 placeholder="Dhaka, Bangladesh"
+//                                 className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition-all duration-300 hover:border-emerald-400/60 hover:bg-slate-50/50 focus:border-emerald-600 focus:bg-white focus:ring-1 focus:ring-emerald-600"
+//                             />
+//                             <FieldError className="text-xs text-rose-500 mt-1 font-medium" />
+//                         </TextField>
+
+//                         {/* Price Per Hour */}
+//                         <TextField name="price_per_hour" type="number" isRequired className="w-full">
+//                             <Label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">
+//                                 Price Per Hour
+//                             </Label>
+//                             <Input
+//                                 type="number"
+//                                 placeholder="1200"
+//                                 className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition-all duration-300 hover:border-emerald-400/60 hover:bg-slate-50/50 focus:border-emerald-600 focus:bg-white focus:ring-1 focus:ring-emerald-600"
+//                             />
+//                             <FieldError className="text-xs text-rose-500 mt-1 font-medium" />
+//                         </TextField>
+
+//                         {/* Capacity */}
+//                         <TextField name="capacity" type="number" isRequired className="w-full">
+//                             <Label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">
+//                                 Capacity (Players)
+//                             </Label>
+//                             <Input
+//                                 type="number"
+//                                 placeholder="20"
+//                                 className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition-all duration-300 hover:border-emerald-400/60 hover:bg-slate-50/50 focus:border-emerald-600 focus:bg-white focus:ring-1 focus:ring-emerald-600"
+//                             />
+//                             <FieldError className="text-xs text-rose-500 mt-1 font-medium" />
+//                         </TextField>
+
+//                         {/* Available Slots */}
+//                         <TextField name="available_slots" isRequired className="w-full">
+//                             <Label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">
+//                                 Available Slots
+//                             </Label>
+//                             <Input
+//                                 placeholder="9AM-11AM, 3PM-5PM"
+//                                 className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition-all duration-300 hover:border-emerald-400/60 hover:bg-slate-50/50 focus:border-emerald-600 focus:bg-white focus:ring-1 focus:ring-emerald-600"
+//                             />
+//                             <FieldError className="text-xs text-rose-500 mt-1 font-medium" />
+//                         </TextField>
+
+//                         {/* Image URL */}
+//                         <div className="md:col-span-2">
+//                             <TextField name="image" isRequired className="w-full">
+//                                 <Label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">
+//                                     Image URL
+//                                 </Label>
+//                                 <Input
+//                                     type="url"
+//                                     placeholder="https://example.com/image.jpg"
+//                                     className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition-all duration-300 hover:border-emerald-400/60 hover:bg-slate-50/50 focus:border-emerald-600 focus:bg-white focus:ring-1 focus:ring-emerald-600"
+//                                 />
+//                                 <FieldError className="text-xs text-rose-500 mt-1 font-medium" />
+//                             </TextField>
+//                         </div>
+
+//                         {/* Description */}
+//                         <div className="md:col-span-2">
+//                             <TextField name="description" isRequired className="w-full">
+//                                 <Label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">
+//                                     Description
+//                                 </Label>
+//                                 <TextArea
+//                                     placeholder="Provide premium descriptions detailing field surface specifications and structural configurations..."
+//                                     className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition-all duration-300 hover:border-emerald-400/60 hover:bg-slate-50/50 focus:border-emerald-600 focus:bg-white focus:ring-1 focus:ring-emerald-600 min-h-[110px]"
+//                                 />
+//                                 <FieldError className="text-xs text-rose-500 mt-1 font-medium" />
+//                             </TextField>
+//                         </div>
+
+//                     </div>
+
+//                     {/* CONFIRMATION SUBMISSION BUTTON ARMED WITH SOLID PALETTE EMERALD COLOR ACTIONS */}
+//                     <Button
+//                         type="submit"
+//                         className="w-full h-12 rounded-xl bg-gradient-to-br from-teal-600 via-green-400 to-lime-400 text-sm font-bold text-white shadow-sm shadow-emerald-600/10 transition-all duration-200 hover:bg-emerald-700 active:scale-[0.99] mt-4"
+//                     >
+//                         Add Facility
+//                     </Button>
+//                 </form>
+//             </Card>
+//         </div>
+//     );
+// };
+
+// export default AddFacilityPage;
+
+
+// ****************************************
+
+
 'use client';
 
 import React from 'react';
@@ -398,6 +597,7 @@ import {
     Card
 } from '@heroui/react';
 import { authClient } from '@/lib/auth-client';
+import toast from 'react-hot-toast';
 
 const AddFacilityPage = () => {
 
@@ -408,10 +608,11 @@ const AddFacilityPage = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
+
         const formData = new FormData(e.currentTarget);
         const facility = Object.fromEntries(formData.entries());
 
-        // Standard numeric mutation configurations
+        // Type conversions
         facility.price_per_hour = Number(facility.price_per_hour);
         facility.capacity = Number(facility.capacity);
 
@@ -424,10 +625,10 @@ const AddFacilityPage = () => {
 
         console.log("Compiling Payload Matrix Data: ", facility);
 
-        const { data: tokenData } = await authClient.token()
-                    console.log(tokenData);
-
         try {
+            const { data: tokenData } = await authClient.token();
+            console.log(tokenData);
+
             const res = await fetch('http://localhost:5000/facility', {
                 method: 'POST',
                 headers: {
@@ -441,138 +642,119 @@ const AddFacilityPage = () => {
             console.log("Server response confirmation block: ", data);
 
             if (data.insertedId) {
-                alert('Facility Added Successfully!');
+                toast.success('Facility Added Successfully!');
                 e.target.reset();
+            } else {
+                toast.error('Failed to add facility!');
             }
 
         } catch (error) {
             console.error("Critical operational pipeline layout fault: ", error);
+            toast.error('Server error! Please try again.');
         }
     };
 
     return (
         <div className="mx-auto max-w-4xl px-4 py-12 md:px-6 bg-slate-50/10 min-h-screen">
+            
             <h1 className="text-3xl font-bold tracking-tight text-slate-900 mb-8">
                 Add Facility
             </h1>
 
             <Card className="p-6 md:p-10 rounded-2xl border border-slate-200/60 bg-white shadow-xl shadow-slate-100/40">
+
                 <form onSubmit={onSubmit} className="space-y-6">
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                         {/* Facility Name */}
                         <TextField name="name" isRequired className="w-full">
-                            <Label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">
+                            <Label className="text-[11px] font-bold uppercase text-slate-400 mb-2">
                                 Facility Name
                             </Label>
-                            <Input
-                                placeholder="Elite Football Turf"
-                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition-all duration-300 hover:border-emerald-400/60 hover:bg-slate-50/50 focus:border-emerald-600 focus:bg-white focus:ring-1 focus:ring-emerald-600"
-                            />
-                            <FieldError className="text-xs text-rose-500 mt-1 font-medium" />
+                            <Input placeholder="Elite Football Turf" />
+                            <FieldError />
                         </TextField>
 
                         {/* Facility Type */}
                         <TextField name="facility_type" isRequired className="w-full">
-                            <Label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">
+                            <Label className="text-[11px] font-bold uppercase text-slate-400 mb-2">
                                 Facility Type
                             </Label>
-                            <Input
-                                placeholder="Football / Badminton / Cricket"
-                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition-all duration-300 hover:border-emerald-400/60 hover:bg-slate-50/50 focus:border-emerald-600 focus:bg-white focus:ring-1 focus:ring-emerald-600"
-                            />
-                            <FieldError className="text-xs text-rose-500 mt-1 font-medium" />
+                            <Input placeholder="Football / Badminton / Cricket" />
+                            <FieldError />
                         </TextField>
 
                         {/* Location */}
                         <TextField name="location" isRequired className="w-full">
-                            <Label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">
+                            <Label className="text-[11px] font-bold uppercase text-slate-400 mb-2">
                                 Location
                             </Label>
-                            <Input
-                                placeholder="Dhaka, Bangladesh"
-                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition-all duration-300 hover:border-emerald-400/60 hover:bg-slate-50/50 focus:border-emerald-600 focus:bg-white focus:ring-1 focus:ring-emerald-600"
-                            />
-                            <FieldError className="text-xs text-rose-500 mt-1 font-medium" />
+                            <Input placeholder="Dhaka, Bangladesh" />
+                            <FieldError />
                         </TextField>
 
-                        {/* Price Per Hour */}
+                        {/* Price */}
                         <TextField name="price_per_hour" type="number" isRequired className="w-full">
-                            <Label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">
+                            <Label className="text-[11px] font-bold uppercase text-slate-400 mb-2">
                                 Price Per Hour
                             </Label>
-                            <Input
-                                type="number"
-                                placeholder="1200"
-                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition-all duration-300 hover:border-emerald-400/60 hover:bg-slate-50/50 focus:border-emerald-600 focus:bg-white focus:ring-1 focus:ring-emerald-600"
-                            />
-                            <FieldError className="text-xs text-rose-500 mt-1 font-medium" />
+                            <Input type="number" placeholder="1200" />
+                            <FieldError />
                         </TextField>
 
                         {/* Capacity */}
                         <TextField name="capacity" type="number" isRequired className="w-full">
-                            <Label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">
-                                Capacity (Players)
+                            <Label className="text-[11px] font-bold uppercase text-slate-400 mb-2">
+                                Capacity
                             </Label>
-                            <Input
-                                type="number"
-                                placeholder="20"
-                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition-all duration-300 hover:border-emerald-400/60 hover:bg-slate-50/50 focus:border-emerald-600 focus:bg-white focus:ring-1 focus:ring-emerald-600"
-                            />
-                            <FieldError className="text-xs text-rose-500 mt-1 font-medium" />
+                            <Input type="number" placeholder="20" />
+                            <FieldError />
                         </TextField>
 
-                        {/* Available Slots */}
+                        {/* Slots */}
                         <TextField name="available_slots" isRequired className="w-full">
-                            <Label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">
+                            <Label className="text-[11px] font-bold uppercase text-slate-400 mb-2">
                                 Available Slots
                             </Label>
-                            <Input
-                                placeholder="9AM-11AM, 3PM-5PM"
-                                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition-all duration-300 hover:border-emerald-400/60 hover:bg-slate-50/50 focus:border-emerald-600 focus:bg-white focus:ring-1 focus:ring-emerald-600"
-                            />
-                            <FieldError className="text-xs text-rose-500 mt-1 font-medium" />
+                            <Input placeholder="9AM-11AM, 3PM-5PM" />
+                            <FieldError />
                         </TextField>
 
-                        {/* Image URL */}
+                        {/* Image */}
                         <div className="md:col-span-2">
-                            <TextField name="image" isRequired className="w-full">
-                                <Label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">
+                            <TextField name="image" isRequired>
+                                <Label className="text-[11px] font-bold uppercase text-slate-400 mb-2">
                                     Image URL
                                 </Label>
-                                <Input
-                                    type="url"
-                                    placeholder="https://example.com/image.jpg"
-                                    className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition-all duration-300 hover:border-emerald-400/60 hover:bg-slate-50/50 focus:border-emerald-600 focus:bg-white focus:ring-1 focus:ring-emerald-600"
-                                />
-                                <FieldError className="text-xs text-rose-500 mt-1 font-medium" />
+                                <Input type="url" placeholder="https://image.com/photo.jpg" />
+                                <FieldError />
                             </TextField>
                         </div>
 
                         {/* Description */}
                         <div className="md:col-span-2">
-                            <TextField name="description" isRequired className="w-full">
-                                <Label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">
+                            <TextField name="description" isRequired>
+                                <Label className="text-[11px] font-bold uppercase text-slate-400 mb-2">
                                     Description
                                 </Label>
-                                <TextArea
-                                    placeholder="Provide premium descriptions detailing field surface specifications and structural configurations..."
-                                    className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition-all duration-300 hover:border-emerald-400/60 hover:bg-slate-50/50 focus:border-emerald-600 focus:bg-white focus:ring-1 focus:ring-emerald-600 min-h-[110px]"
-                                />
-                                <FieldError className="text-xs text-rose-500 mt-1 font-medium" />
+                                <TextArea placeholder="Facility description..." />
+                                <FieldError />
                             </TextField>
                         </div>
 
                     </div>
 
-                    {/* CONFIRMATION SUBMISSION BUTTON ARMED WITH SOLID PALETTE EMERALD COLOR ACTIONS */}
+                    {/* Submit */}
                     <Button
                         type="submit"
-                        className="w-full h-12 rounded-xl bg-gradient-to-br from-teal-600 via-green-400 to-lime-400 text-sm font-bold text-white shadow-sm shadow-emerald-600/10 transition-all duration-200 hover:bg-emerald-700 active:scale-[0.99] mt-4"
+                        className="w-full h-12 rounded-xl bg-gradient-to-br from-teal-600 via-green-400 to-lime-400 text-white font-bold"
                     >
                         Add Facility
                     </Button>
+
                 </form>
+
             </Card>
         </div>
     );
