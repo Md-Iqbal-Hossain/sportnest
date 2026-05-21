@@ -104,17 +104,22 @@ import { LuMapPin } from 'react-icons/lu';
 import { FaTags } from 'react-icons/fa6';
 import { RxPeople } from 'react-icons/rx';
 import { BsFillTrash2Fill } from 'react-icons/bs';
+import { authClient } from '@/lib/auth-client';
 
 const ManageFacilitiesPage = () => {
     const [facilities, setFacilities] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // Fetch facilities assigned to current mock user database profile
     const fetchFacilities = async () => {
+        // const { data: tokenData } = await authClient.token();
+        // console.log(tokenData);
+
         try {
             const res = await fetch('http://localhost:5000/facility');
+
             const data = await res.json();
             setFacilities(data);
+
         } catch (error) {
             console.error("Error pulling database items:", error);
         } finally {
@@ -132,8 +137,13 @@ const ManageFacilitiesPage = () => {
         if (!confirmDelete) return;
 
         try {
+            const { data: tokenData } = await authClient.token();
+            console.log(tokenData);
             const res = await fetch(`http://localhost:5000/facility/${id}`, {
-                method: 'DELETE'
+                method: 'DELETE',
+                headers: {
+                'authorization': `Bearer ${tokenData?.token}`
+            }
             });
             const data = await res.json();
 

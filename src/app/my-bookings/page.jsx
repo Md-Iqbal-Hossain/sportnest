@@ -565,8 +565,19 @@ const MyBookingsPage = () => {
         const fetchUserBookings = async () => {
             if (!session?.user?.email) return;
 
+            const { data: tokenData } = await authClient.token()
+            console.log(tokenData);
+
             try {
-                const response = await fetch(`http://localhost:5000/booking/${session.user.email}`);
+                // const response = await fetch(`http://localhost:5000/booking/${session.user.email}`);
+                const response = await fetch(
+                    `http://localhost:5000/booking/${session.user.email}`,
+                    {
+                        headers: {
+                            authorization: `Bearer ${tokenData?.token}`
+                        }
+                    }
+                );
                 if (response.ok) {
                     const data = await response.json();
                     setBookings(data);
@@ -593,15 +604,20 @@ const MyBookingsPage = () => {
 
         setIsCancelling(bookingId);
         try {
+            const { data: tokenData } = await authClient.token()
+            console.log(tokenData);
             const response = await fetch(`http://localhost:5000/booking/${bookingId}`, {
                 method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${tokenData?.token}`
+            }
             });
 
             if (response.ok) {
                 // Instantly remove booking from local UI state stack
                 setBookings((prev) => prev.filter((item) => item._id !== bookingId));
                 // 2. Success Toast Alert
-                toast.success("Booking cancelled successfully!"); 
+                toast.success("Booking cancelled successfully!");
             } else {
                 // 3. Error Toast Alert (Replacing native prompt alert)
                 toast.error("Failed to cancel booking. Please try again.");

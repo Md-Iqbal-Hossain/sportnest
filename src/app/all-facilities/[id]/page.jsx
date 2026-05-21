@@ -263,12 +263,22 @@ import { FaClock, FaTags } from 'react-icons/fa6';
 import { LuMapPin } from 'react-icons/lu';
 import { RxPeople } from 'react-icons/rx';
 import BookingForm from '@/components/BookingForm';
+import { headers } from 'next/headers';
+import { auth } from '@/lib/auth';
 
 const AllFacilitiesDetailsPage = async ({ params }) => {
     const { id } = await params;
+    const {token} = await auth.api.getToken({
+        headers: await headers()
+    })
+    
 
     // Server-side data compilation
-    const res = await fetch(`http://localhost:5000/facility/${id}`, { cache: 'no-store' });
+    const res = await fetch(`http://localhost:5000/facility/${id}`,{
+        headers:{
+            authorization: `Bearer ${token}`
+        }
+    }, { cache: 'no-store' });
     const facility = await res.json();
 
     const {

@@ -852,11 +852,16 @@ const BookingForm = ({ facilityName, pricePerHour, availableSlots, facilityImage
             bookedAt: new Date()
         };
 
+        const {data:tokenData} = await authClient.token()
+        console.log(tokenData);
+        
+
         try {
             const response = await fetch('http://localhost:5000/booking', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    authorization: `Bearer ${tokenData?.token}`
                 },
                 body: JSON.stringify(bookingData),
             });

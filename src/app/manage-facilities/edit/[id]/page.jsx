@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { FieldError, Input, Label, TextArea, TextField, Button, Card } from '@heroui/react';
+import { authClient } from '@/lib/auth-client';
 
 const EditFacilityPage = () => {
     const router = useRouter();
@@ -14,8 +15,14 @@ const EditFacilityPage = () => {
     // Load original source payload parameters from database instance on load
     useEffect(() => {
         const fetchFacilityDetails = async () => {
+            const { data: tokenData } = await authClient.token();
+            console.log(tokenData);
             try {
-                const res = await fetch(`http://localhost:5000/facility/${id}`);
+                const res = await fetch(`http://localhost:5000/facility/${id}`, {
+                    headers: {
+                        authorization: `Bearer ${tokenData?.token}`
+                    }
+                });
                 const data = await res.json();
                 setFacility(data);
             } catch (error) {
@@ -38,9 +45,14 @@ const EditFacilityPage = () => {
         updatedFields.available_slots = updatedFields.available_slots.split(',').map(s => s.trim());
 
         try {
+            const { data: tokenData } = await authClient.token();
+            console.log(tokenData);
             const res = await fetch(`http://localhost:5000/facility/${id}`, {
                 method: 'PUT',
-                headers: { 'content-type': 'application/json' },
+                headers: {
+                    'content-type': 'application/json',
+                    'authorization': `Bearer ${tokenData?.token}`
+                },
                 body: JSON.stringify(updatedFields)
             });
             const data = await res.json();
@@ -66,7 +78,7 @@ const EditFacilityPage = () => {
             <Card className="p-6 md:p-10 rounded-2xl border border-slate-200 bg-white shadow-xl shadow-slate-100/40">
                 <form onSubmit={handleUpdateSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        
+
                         <TextField name="name" defaultValue={facility.name} isRequired>
                             <Label className="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">Facility Name</Label>
                             <Input className="w-full rounded-xl border px-4 py-3 text-sm text-slate-700 outline-none transition-all hover:border-emerald-400/60 focus:border-emerald-600 focus:bg-white focus:ring-1 focus:ring-emerald-600" />

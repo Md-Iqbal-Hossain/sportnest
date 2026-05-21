@@ -397,6 +397,7 @@ import {
     Button,
     Card
 } from '@heroui/react';
+import { authClient } from '@/lib/auth-client';
 
 const AddFacilityPage = () => {
 
@@ -423,11 +424,15 @@ const AddFacilityPage = () => {
 
         console.log("Compiling Payload Matrix Data: ", facility);
 
+        const { data: tokenData } = await authClient.token()
+                    console.log(tokenData);
+
         try {
             const res = await fetch('http://localhost:5000/facility', {
                 method: 'POST',
                 headers: {
-                    'content-type': 'application/json'
+                    'content-type': 'application/json',
+                    authorization: `Bearer ${tokenData?.token}`
                 },
                 body: JSON.stringify(facility)
             });
