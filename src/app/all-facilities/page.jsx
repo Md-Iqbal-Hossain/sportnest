@@ -19,7 +19,7 @@ export default function AllFacilitiesPage() {
           type: selectedType
         }).toString();
 
-        const response = await fetch(`http://localhost:5000/facility?${queryParams}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/facility?${queryParams}`);
         if (!response.ok) throw new Error('Network error');
 
         const data = await response.json();

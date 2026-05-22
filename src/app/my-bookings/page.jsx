@@ -26,7 +26,7 @@ const MyBookingsPage = () => {
 
             try {
                 const response = await fetch(
-                    `http://localhost:5000/booking/${session.user.email}`,
+                    `${process.env.NEXT_PUBLIC_SERVER_URL}/booking/${session.user.email}`,
                     {
                         headers: {
                             authorization: `Bearer ${tokenData?.token}`
@@ -60,7 +60,7 @@ const MyBookingsPage = () => {
         try {
             const { data: tokenData } = await authClient.token()
             console.log(tokenData);
-            const response = await fetch(`http://localhost:5000/booking/${bookingId}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/booking/${bookingId}`, {
                 method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${tokenData?.token}`

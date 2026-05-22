@@ -20,7 +20,7 @@ const ManageFacilitiesPage = () => {
 
     const fetchFacilities = async () => {
         try {
-            const res = await fetch('http://localhost:5000/facility');
+            const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/facility`);
             const data = await res.json();
             setFacilities(data);
         } catch (error) {
@@ -41,7 +41,7 @@ const ManageFacilitiesPage = () => {
         try {
             const { data: tokenData } = await authClient.token();
 
-            const res = await fetch(`http://localhost:5000/facility/${id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/facility/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'authorization': `Bearer ${tokenData?.token}`

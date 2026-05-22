@@ -29,7 +29,7 @@ const EditFacilityPage = () => {
                 const { data: tokenData } = await authClient.token();
 
                 const res = await fetch(
-                    `http://localhost:5000/facility/${id}`,
+                    `${process.env.NEXT_PUBLIC_SERVER_URL}/facility/${id}`,
                     {
                         headers: {
                             authorization: `Bearer ${tokenData?.token}`
@@ -68,7 +68,7 @@ const EditFacilityPage = () => {
             const { data: tokenData } = await authClient.token();
 
             const res = await fetch(
-                `http://localhost:5000/facility/${id}`,
+                `${process.env.NEXT_PUBLIC_SERVER_URL}/facility/${id}`,
                 {
                     method: 'PUT',
                     headers: {

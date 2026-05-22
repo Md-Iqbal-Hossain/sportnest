@@ -13,6 +13,8 @@ import {
 } from "react-icons/gi";
 import { FaSwimmingPool } from "react-icons/fa";
 
+import { motion } from "framer-motion";
+
 const categories = [
     {
         name: "Football",
@@ -56,6 +58,29 @@ const categories = [
     }
 ];
 
+// container animation
+const containerVariants = {
+    hidden: {},
+    show: {
+        transition: {
+            staggerChildren: 0.12
+        }
+    }
+};
+
+// card animation
+const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    show: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            duration: 0.5,
+            ease: "easeOut"
+        }
+    }
+};
+
 const SportCategories = () => {
     return (
         <div className="relative max-w-7xl mx-auto px-4 mt-20">
@@ -64,22 +89,36 @@ const SportCategories = () => {
             <div className="absolute inset-0 -z-10 bg-gradient-to-r from-green-50 via-white to-green-50 blur-3xl opacity-60"></div>
 
             {/* Header */}
-            <div className="text-center mb-12">
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+                className="text-center mb-12"
+            >
                 <h2 className="text-4xl font-bold text-gray-900">
                     Explore Sport Categories
                 </h2>
                 <p className="text-gray-500 mt-3 max-w-xl mx-auto">
                     Discover and book your favorite sports facilities instantly with a smooth and modern experience
                 </p>
-            </div>
+            </motion.div>
 
             {/* Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <motion.div
+                variants={containerVariants}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true }}
+                className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+            >
 
                 {categories.map((cat, index) => (
-                    <div
+                    <motion.div
                         key={index}
-                        className="group relative bg-white/70 backdrop-blur-xl border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-xl transition duration-300 hover:-translate-y-2"
+                        variants={cardVariants}
+                        whileHover={{ scale: 1.05 }}
+                        className="group relative bg-white/70 backdrop-blur-xl border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-xl transition duration-300"
                     >
 
                         {/* Icon Circle */}
@@ -99,10 +138,11 @@ const SportCategories = () => {
 
                         {/* Hover Glow Border */}
                         <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-green-400 transition"></div>
-                    </div>
+
+                    </motion.div>
                 ))}
 
-            </div>
+            </motion.div>
         </div>
     );
 };

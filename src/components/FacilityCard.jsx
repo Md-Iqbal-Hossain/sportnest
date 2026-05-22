@@ -6,6 +6,7 @@ import { RxPeople } from "react-icons/rx";
 import { FaClock } from "react-icons/fa";
 import { Button } from "@heroui/react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 //  Badge color logic
 const getBadgeColor = (type) => {
